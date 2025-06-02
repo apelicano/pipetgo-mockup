@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Mockup: Lab Services Marketplace</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Visualization & Content Choices: 
+        - User Roles & Core Functionalities -> Goal: Demonstrate Workflows -> Viz/Presentation: Interactive mock screens with forms, lists, buttons. Interaction: Clicking navigation items changes views; buttons simulate actions. Justification: Directly addresses the request to demo workflow components for each user type, including Logistics. Method: HTML/Tailwind, Vanilla JS.
+        - Logistics Workflow -> Goal: Demonstrate Sample Tracking -> Viz/Presentation: Lists of pickups/deliveries with status updates. Interaction: Buttons to simulate status changes. Justification: Clearly shows the logistics process. Method: HTML/Tailwind, JS.
+        - Mock Data (Services, Orders, Users, Pickups) -> Goal: Populate UI for Realism -> Viz/Presentation: Displayed in lists and cards. Interaction: None beyond being part of the mock views. Justification: Makes the mockup feel more like a real application. Method: JS objects storing mock data, rendered into HTML by JS.
+        - CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="min-h-screen flex items-center justify-center p-4">
+
+    <div id="roleSelectionScreen" class="text-center card max-w-md mx-auto">
+        <h1 class="text-3xl font-bold mb-2 text-slate-800">Lab Services Marketplace</h1>
+        <p class="text-slate-600 mb-8">Interactive Mockup: Select a Role to Begin</p>
+        <div class="space-y-3">
+            <button class="button-primary w-full text-lg" onclick="selectRole('customer')">👤 Customer / Client</button>
+            <button class="button-primary w-full text-lg" onclick="selectRole('laboratory')">🔬 Laboratory</button>
+            <button class="button-logistics w-full text-lg" onclick="selectRole('logistics')">🚚 Logistics</button>
+            <button class="button-primary w-full text-lg" onclick="selectRole('administrator')">⚙️ Administrator</button>
+        </div>
+        <p class="mt-8 text-xs text-slate-500">This is a simplified mockup to demonstrate core user workflows. No data is actually saved or processed.</p>
+    </div>
+
+    <div id="appContainer" class="app-container w-full h-screen max-h-screen overflow-hidden">
+        <aside id="sidebar" class="sidebar w-64 p-4 space-y-2 flex-shrink-0 overflow-y-auto">
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold text-slate-700" id="sidebarRoleTitle">Role</h2>
+                <button class="text-xs text-blue-600 hover:underline" onclick="showRoleSelection()">Switch Role</button>
+            </div>
+            </aside>
+
+        <main class="flex-1 p-6 overflow-y-auto bg-slate-50">
+            <div id="mainContent">
+                </div>
+        </main>
+    </div>
+
+    <div id="genericModal" class="modal">
+        <div class="modal-content">
+            <h3 id="modalTitle" class="text-xl font-semibold mb-4">Modal Title</h3>
+            <div id="modalBody">Modal body content here.</div>
+            <div class="mt-6 flex justify-end space-x-3">
+                <button id="modalCloseButton" class="button-secondary" onclick="closeModal()">Close</button>
+                <button id="modalActionButton" class="button-primary hidden">Action</button>
+            </div>
+        </div>
+    </div>
+
+<script src="script.js"></script>
+</body>
+</html>

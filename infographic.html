@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Guide: Lab Services Marketplace Design</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Visualization & Content Choices:
+        - Report Info: Core Objectives & User Roles -> Goal: Inform -> Viz: Key stat cards and role descriptions. Interaction: None, static info. Justification: Provides a quick, high-level summary upfront. Method: HTML/Tailwind.
+        - Report Info: Key User Flows & Pages -> Goal: Organize/Change -> Viz: Interactive Process Flow Diagram. Interaction: Clicking on a stage highlights the path and displays detailed information. Justification: Visualizing the flow makes the complex marketplace interactions (search, quote, order) much easier to follow than a long list of pages. Method: HTML/Tailwind/JS.
+        - Report Info: Component-Based Architecture -> Goal: Organize -> Viz: Card-based layout for Atoms, Molecules, Organisms. Interaction: Hovering over cards for emphasis. Justification: Represents the hierarchical nature of component design visually. Method: HTML/Tailwind/JS.
+        - Report Info: Technology Stack -> Goal: Compare/Inform -> Viz: Dynamic Doughnut Chart. Interaction: Hovering over chart segments reveals details in a tooltip. Justification: Provides a clear, quantitative breakdown of the recommended technologies. Method: Chart.js.
+        - CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f7f4;
+            color: #4a4a4a;
+        }
+        .nav-button {
+            transition: all 0.3s ease;
+        }
+        .nav-button.active {
+            background-color: #4A90E2;
+            color: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .nav-button:not(.active):hover {
+            background-color: #e0e7ff;
+        }
+        .content-section {
+            display: none;
+        }
+        .content-section.active {
+            display: block;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .flow-step {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .flow-step:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        .flow-step.active-path {
+            background-color: #4A90E2;
+            color: white;
+            border-color: #357ABD;
+        }
+        .flow-arrow {
+            transition: color 0.3s ease;
+        }
+        .flow-arrow.active-path {
+            color: #4A90E2;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 450px;
+            margin-left: auto;
+            margin-right: auto;
+            height: auto;
+            max-height: 450px;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <div class="container mx-auto p-4 md:p-8 max-w-7xl">
+
+        <header class="text-center mb-8 md:mb-12">
+            <h1 class="text-4xl md:text-5xl font-bold text-gray-800 mb-2">Lab Services Marketplace</h1>
+            <p class="text-lg text-gray-600">An Interactive Guide to the Frontend Design</p>
+        </header>
+
+        <nav class="flex flex-wrap justify-center gap-2 md:gap-4 mb-8 md:mb-12 sticky top-4 bg-f8f7f4/80 backdrop-blur-sm z-10 p-2 rounded-xl">
+            <button class="nav-button font-medium py-2 px-4 rounded-full text-sm md:text-base" data-target="overview">Overview</button>
+            <button class="nav-button font-medium py-2 px-4 rounded-full text-sm md:text-base" data-target="journeys">User Journeys</button>
+            <button class="nav-button font-medium py-2 px-4 rounded-full text-sm md:text-base" data-target="architecture">Architecture</button>
+            <button class="nav-button font-medium py-2 px-4 rounded-full text-sm md:text-base" data-target="stack">Tech Stack</button>
+        </nav>
+
+        <main>
+            <section id="overview" class="content-section">
+                <div class="text-center mb-10">
+                    <h2 class="text-3xl font-bold text-gray-800">Core Objectives & Roles</h2>
+                    <p class="mt-2 text-gray-600 max-w-3xl mx-auto">This platform is designed to seamlessly connect those in need of laboratory services with qualified providers. The architecture supports the distinct goals of each user group involved in the marketplace.</p>
+                </div>
+                <div class="grid md:grid-cols-3 gap-8 text-center">
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <div class="text-4xl mb-3">👤</div>
+                        <h3 class="text-xl font-semibold text-gray-800 mb-2">Customers/Clients</h3>
+                        <p class="text-gray-600">Users seeking services. Their journey focuses on easy service discovery, comparison, ordering, and progress tracking.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <div class="text-4xl mb-3">🔬</div>
+                        <h3 class="text-xl font-semibold text-gray-800 mb-2">Laboratories</h3>
+                        <p class="text-gray-600">Service providers. Their experience is built around managing service listings, responding to quotes, and fulfilling orders.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <div class="text-4xl mb-3">⚙️</div>
+                        <h3 class="text-xl font-semibold text-gray-800 mb-2">Administrators</h3>
+                        <p class="text-gray-600">Platform managers. They oversee transactions, manage user accounts, and ensure the smooth operation of the marketplace.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="journeys" class="content-section">
+                <div class="text-center mb-10">
+                    <h2 class="text-3xl font-bold text-gray-800">Interactive User Journeys</h2>
+                    <p class="mt-2 text-gray-600 max-w-3xl mx-auto">This diagram illustrates the core interactions within the marketplace. Click any step to highlight the path and see more details about the pages and components involved.</p>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-lg">
+                    <div id="flow-info" class="mb-6 p-4 bg-blue-50 border border-blue-200 rounded-lg text-gray-700 min-h-[100px] flex items-center justify-center">
+                        <p>Click a step to begin.</p>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-5 items-center justify-items-center gap-y-4 text-center text-sm font-medium">
+                        <div class="flow-step border-2 border-gray-300 bg-gray-50 p-3 rounded-lg w-full" data-flow="1">1. Discovery</div>
+                        <div class="flow-arrow text-3xl text-gray-300">→</div>
+                        <div class="flow-step border-2 border-gray-300 bg-gray-50 p-3 rounded-lg w-full" data-flow="2">2. Quote Request</div>
+                        <div class="flow-arrow text-3xl text-gray-300">→</div>
+                        <div class="flow-step border-2 border-gray-300 bg-gray-50 p-3 rounded-lg w-full" data-flow="3">3. Order & Payment</div>
+                        <div class="flow-arrow text-3xl text-gray-300 transform md:rotate-90 md:translate-y-6">↓</div>
+                        <div class="hidden md:block"></div>
+                        <div class="hidden md:block"></div>
+                        <div class="hidden md:block"></div>
+                        <div class="flow-arrow text-3xl text-gray-300 transform md:-rotate-90 md:-translate-y-6">↑</div>
+                        <div class="flow-step border-2 border-gray-300 bg-gray-50 p-3 rounded-lg w-full" data-flow="4">4. Fulfillment</div>
+                        <div class="flow-arrow text-3xl text-gray-300">←</div>
+                        <div class="flow-step border-2 border-gray-300 bg-gray-50 p-3 rounded-lg w-full" data-flow="5">5. Review</div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="architecture" class="content-section">
+                <div class="text-center mb-10">
+                    <h2 class="text-3xl font-bold text-gray-800">Component-Based Architecture</h2>
+                    <p class="mt-2 text-gray-600 max-w-3xl mx-auto">The application is built using a modular, component-based structure inspired by Atomic Design. This approach ensures reusability, consistency, and maintainability.</p>
+                </div>
+                <div class="space-y-8">
+                    <div>
+                        <h3 class="text-2xl font-semibold mb-4 text-gray-700">Atoms: The Building Blocks</h3>
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                            <div class="bg-white p-4 rounded-lg shadow text-center">Button</div>
+                            <div class="bg-white p-4 rounded-lg shadow text-center">Input</div>
+                            <div class="bg-white p-4 rounded-lg shadow text-center">Label</div>
+                            <div class="bg-white p-4 rounded-lg shadow text-center">Icon</div>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-semibold mb-4 text-gray-700">Molecules: Simple Components</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                             <div class="bg-white p-4 rounded-lg shadow">Search Bar (Input + Button)</div>
+                             <div class="bg-white p-4 rounded-lg shadow">Service Card (Icon + Text + Price)</div>
+                        </div>
+                    </div>
+                     <div>
+                        <h3 class="text-2xl font-semibold mb-4 text-gray-700">Organisms: Complex Sections</h3>
+                        <div class="grid grid-cols-1 gap-4">
+                            <div class="bg-white p-4 rounded-lg shadow">Header (Logo + Navigation + Search + Profile)</div>
+                            <div class="bg-white p-4 rounded-lg shadow">Service Listing (Filter Panel + List of Service Cards)</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="stack" class="content-section">
+                <div class="text-center mb-10">
+                    <h2 class="text-3xl font-bold text-gray-800">Recommended Technology Stack</h2>
+                    <p class="mt-2 text-gray-600 max-w-3xl mx-auto">The frontend relies on a modern, robust set of libraries and frameworks to deliver a high-quality user experience. The chart below shows a conceptual breakdown of the key technology categories.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-lg">
+                   <div class="chart-container">
+                       <canvas id="techStackChart"></canvas>
+                   </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const navButtons = document.querySelectorAll('.nav-button');
+            const contentSections = document.querySelectorAll('.content-section');
+            const flowSteps = document.querySelectorAll('.flow-step');
+            const flowArrows = document.querySelectorAll('.flow-arrow');
+            const flowInfo = document.getElementById('flow-info');
+
+            const flowDetails = {
+                '1': '<strong>Discovery:</strong> A customer searches or browses service categories. Key pages include the Homepage and Service Listing Page, utilizing components like `SearchBar`, `ServiceFilterPanel`, and `ServiceCard`.',
+                '2': '<strong>Quote Request:</strong> After finding a service, the customer requests a quote from the lab via the Service Detail Page. The lab uses its dashboard to create and send a quote. Involves `Modal` and `FormControls`.',
+                '3': '<strong>Order & Payment:</strong> The customer accepts the quote and proceeds to payment. This flow involves the Customer Dashboard, specifically the "My Quotes" and order creation pages. Secure payment processing is critical.',
+                '4': '<strong>Fulfillment:</strong> The lab receives the order and begins work. They update the order status via their dashboard, which the customer can track. The `OrderManagement` and `OrderStatusBadge` components are key.',
+                '5': '<strong>Review:</strong> After the work is complete and the report is delivered, the customer can leave a review and rating for the service and the lab, using components like `ReviewCard` and `RatingStars`.'
+            };
+
+            function updateActiveNav(targetId) {
+                navButtons.forEach(btn => {
+                    btn.classList.toggle('active', btn.dataset.target === targetId);
+                });
+                contentSections.forEach(sec => {
+                    sec.classList.toggle('active', sec.id === targetId);
+                });
+            }
+
+            navButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    updateActiveNav(button.dataset.target);
+                });
+            });
+
+            flowSteps.forEach(step => {
+                step.addEventListener('click', () => {
+                    const flowId = step.dataset.flow;
+
+                    flowSteps.forEach(s => s.classList.remove('active-path'));
+                    flowArrows.forEach(a => a.classList.remove('active-path'));
+
+                    step.classList.add('active-path');
+
+                    if (flowId === '1') {
+                        flowArrows[0].classList.add('active-path');
+                    } else if (flowId === '2') {
+                        flowArrows[0].classList.add('active-path');
+                        flowArrows[1].classList.add('active-path');
+                    } else if (flowId === '3') {
+                        flowArrows[1].classList.add('active-path');
+                        flowArrows[2].classList.add('active-path');
+                    } else if (flowId === '4') {
+                        flowArrows[2].classList.add('active-path');
+                        flowArrows[3].classList.add('active-path');
+                    } else if (flowId === '5') {
+                        flowArrows[3].classList.add('active-path');
+                        flowArrows[4].classList.add('active-path');
+                    }
+
+                    flowInfo.innerHTML = `<p>${flowDetails[flowId]}</p>`;
+                });
+            });
+
+            updateActiveNav('overview');
+
+            const ctx = document.getElementById('techStackChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Core (React)', 'Styling (Tailwind)', 'State Management', 'Data Fetching', 'Routing', 'Forms'],
+                    datasets: [{
+                        label: 'Tech Stack',
+                        data: [30, 20, 15, 15, 10, 10],
+                        backgroundColor: [
+                            '#4A90E2', // Blue
+                            '#50E3C2', // Teal
+                            '#F5A623', // Orange
+                            '#F8E71C', // Yellow
+                            '#BD10E0', // Purple
+                            '#7ED321'  // Green
+                        ],
+                        borderColor: '#f8f7f4',
+                        borderWidth: 4,
+                        hoverOffset: 8
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                font: {
+                                    family: 'Inter',
+                                    size: 12
+                                },
+                                padding: 15
+                            }
+                        },
+                        tooltip: {
+                            bodyFont: { family: 'Inter' },
+                            titleFont: { family: 'Inter' },
+                            callbacks: {
+                                label: function(context) {
+                                    let label = context.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    if (context.parsed !== null) {
+                                        label += context.parsed + '%';
+                                    }
+                                    return label;
+                                }
+                            }
+                        }
+                    },
+                    cutout: '60%'
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
