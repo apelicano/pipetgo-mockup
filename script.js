@@ -3,10 +3,10 @@ let currentRole = null;
 
     const mockData = {
         services: [
-            { id: 's1', name: 'Fatty Acid Composition Analysis', category: 'Composition Analysis', lab: 'Alpha Labs', priceEst: '₱250', turnaround: '5-7 days', description: 'Comprehensive analysis of fatty acid profiles in various sample types using GC-FID.' },
-            { id: 's2', name: 'Gas Chromatography Screening (Basic)', category: 'Chromatography', lab: 'Beta Diagnostics', priceEst: '₱150', turnaround: '3-5 days', description: 'Screening for volatile and semi-volatile organic compounds via GC-MS.' },
+            { id: 's1', name: 'Fatty Acid Composition Analysis', category: 'Composition Analysis', lab: 'Alpha Labs', priceEst: '₱ 250', turnaround: '5-7 days', description: 'Comprehensive analysis of fatty acid profiles in various sample types using GC-FID.' },
+            { id: 's2', name: 'Gas Chromatography Screening (Basic)', category: 'Chromatography', lab: 'Beta Diagnostics', priceEst: '₱ 150', turnaround: '3-5 days', description: 'Screening for volatile and semi-volatile organic compounds via GC-MS.' },
             { id: 's3', name: 'HPLC Analysis - Custom Method', category: 'Chromatography', lab: 'Gamma Analytics', priceEst: 'Quote', turnaround: '7-10 days', description: 'High-Performance Liquid Chromatography analysis tailored to specific client needs.' },
-            { id: 's4', name: 'Protein Sequencing', category: 'Biochemical Analysis', lab: 'Alpha Labs', priceEst: '₱500', turnaround: '10-14 days', description: 'N-terminal sequencing of purified proteins.' }
+            { id: 's4', name: 'Protein Sequencing', category: 'Biochemical Analysis', lab: 'Alpha Labs', priceEst: '₱ 500', turnaround: '10-14 days', description: 'N-terminal sequencing of purified proteins.' }
         ],
         labs: [
             { id: 'l1', name: 'Alpha Labs', location: 'City A, State X', rating: 4.8, specialties: ['Composition Analysis', 'Biochemical Analysis'], certifications: ['ISO 17025', 'GLP Compliant'] },
@@ -15,22 +15,22 @@ let currentRole = null;
         ],
         orders: { // Added logisticsStatus
             customer: [
-                { id: 'o101', serviceName: 'Fatty Acid Analysis', labName: 'Alpha Labs', date: '2024-05-15', status: 'Completed', total: '₱250', reportUrl: '#', logisticsStatus: 'Sample Delivered to Lab' },
-                { id: 'o102', serviceName: 'GC Screening', labName: 'Beta Diagnostics', date: '2024-05-28', status: 'In Progress', total: '₱150', reportUrl: null, logisticsStatus: 'Sample In Transit' },
+                { id: 'o101', serviceName: 'Fatty Acid Analysis', labName: 'Alpha Labs', date: '2024-05-15', status: 'Completed', total: '₱ 250', reportUrl: '#', logisticsStatus: 'Sample Delivered to Lab' },
+                { id: 'o102', serviceName: 'GC Screening', labName: 'Beta Diagnostics', date: '2024-05-28', status: 'In Progress', total: '₱ 150', reportUrl: null, logisticsStatus: 'Sample In Transit' },
                 { id: 'o103', serviceName: 'HPLC Analysis', labName: 'Gamma Analytics', date: '2024-06-01', status: 'Sample Received', total: 'Pending Quote', reportUrl: null, logisticsStatus: 'Awaiting Pickup' }
             ],
             laboratory: [ // Added logisticsStatus
-                { id: 'o201', serviceName: 'Protein Sequencing', clientName: 'Client X Inc.', date: '2024-05-20', status: 'Analysis Complete', total: '₱500', logisticsStatus: 'Sample Delivered to Lab' },
-                { id: 'o202', serviceName: 'GC Screening', clientName: 'Client Y Co.', date: '2024-05-29', status: 'In Progress', total: '₱150', logisticsStatus: 'Sample In Transit' }
+                { id: 'o201', serviceName: 'Protein Sequencing', clientName: 'Client X Inc.', date: '2024-05-20', status: 'Analysis Complete', total: '₱ 500', logisticsStatus: 'Sample Delivered to Lab' },
+                { id: 'o202', serviceName: 'GC Screening', clientName: 'Client Y Co.', date: '2024-05-29', status: 'In Progress', total: '₱ 150', logisticsStatus: 'Sample In Transit' }
             ]
         },
         quotes: {
             customer: [
-                { id: 'q101', serviceName: 'HPLC Analysis', labName: 'Gamma Analytics', dateSubmitted: '2024-05-30', status: 'Received - ₱450', details: 'Quote for custom HPLC method development and analysis of 10 samples.'},
+                { id: 'q101', serviceName: 'HPLC Analysis', labName: 'Gamma Analytics', dateSubmitted: '2024-05-30', status: 'Received - ₱ 450', details: 'Quote for custom HPLC method development and analysis of 10 samples.'},
                 { id: 'q102', serviceName: 'Advanced Microscopy', labName: 'Delta Imaging', dateSubmitted: '2024-06-01', status: 'Submitted', details: 'Request for high-resolution SEM imaging.'}
             ],
             laboratory: [
-                 { id: 'q201', serviceName: 'HPLC Analysis', clientName: 'Client Z Ltd.', dateReceived: '2024-05-30', status: 'Responded - ₱450' },
+                 { id: 'q201', serviceName: 'HPLC Analysis', clientName: 'Client Z Ltd.', dateReceived: '2024-05-30', status: 'Responded - ₱ 450' },
                  { id: 'q202', serviceName: 'Soil Contaminant Testing', clientName: 'AgriCorp', dateReceived: '2024-06-02', status: 'New Request' }
             ]
         },
@@ -47,9 +47,9 @@ let currentRole = null;
             { id: 'u5', name: 'Logistics Team Lead', email: 'logistics@marketplace.com', role: 'Logistics', joined: '2024-01-05', status: 'Active' }
         ],
         transactions: [
-            { id: 't1', date: '2024-05-15', type: 'Service Payment', amount: '₱250', client: 'John Doe', lab: 'Alpha Labs', status: 'Completed' },
-            { id: 't2', date: '2024-05-20', type: 'Lab Payout', amount: '₱400', lab: 'Beta Diagnostics', status: 'Processed' },
-            { id: 't3', date: '2024-05-28', type: 'Service Payment', amount: '₱150', client: 'Alice Brown', lab: 'Beta Diagnostics', status: 'Completed' }
+            { id: 't1', date: '2024-05-15', type: 'Service Payment', amount: '₱ 250', client: 'John Doe', lab: 'Alpha Labs', status: 'Completed' },
+            { id: 't2', date: '2024-05-20', type: 'Lab Payout', amount: '₱ 400', lab: 'Beta Diagnostics', status: 'Processed' },
+            { id: 't3', date: '2024-05-28', type: 'Service Payment', amount: '₱ 150', client: 'Alice Brown', lab: 'Beta Diagnostics', status: 'Completed' }
         ]
     };
 
@@ -348,7 +348,7 @@ let currentRole = null;
                 const form = createForm([
                     {id: 'serviceName', name: 'serviceName', label: 'Service Name', type: 'text', placeholder: 'e.g., DNA Extraction'},
                     {id: 'category', name: 'category', label: 'Category', type: 'text', placeholder: 'e.g., Molecular Biology'},
-                    {id: 'price', name: 'price', label: 'Price (or "Quote")', type: 'text', placeholder: 'e.g., $100 or Quote'},
+                    {id: 'price', name: 'price', label: 'Price (or "Quote")', type: 'text', placeholder: 'e.g., ₱ 100 or Quote'},
                     {id: 'turnaround', name: 'turnaround', label: 'Turnaround Time', type: 'text', placeholder: 'e.g., 2-3 business days'},
                     {id: 'description', name: 'description', label: 'Description', type: 'textarea', placeholder: 'Detailed service description...'}
                 ], 'Add Service', () => {
