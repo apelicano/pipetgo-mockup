@@ -7,9 +7,9 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <!-- Visualization & Content Choices: 
-        - User Roles & Core Functionalities -> Goal: Demonstrate Workflows -> Viz/Presentation: Interactive mock screens with forms, lists, buttons. Interaction: Clicking navigation items changes views; buttons simulate actions. Justification: Directly addresses the request to demo workflow components for each user type, including Logistics. Method: HTML/Tailwind, Vanilla JS.
-        - Logistics Workflow -> Goal: Demonstrate Sample Tracking -> Viz/Presentation: Lists of pickups/deliveries with status updates. Interaction: Buttons to simulate status changes. Justification: Clearly shows the logistics process. Method: HTML/Tailwind, JS.
-        - Mock Data (Services, Orders, Users, Pickups) -> Goal: Populate UI for Realism -> Viz/Presentation: Displayed in lists and cards. Interaction: None beyond being part of the mock views. Justification: Makes the mockup feel more like a real application. Method: JS objects storing mock data, rendered into HTML by JS.
+        - Workflows: Interactive mock screens. Interaction: Clicks change views, simulate actions. Method: HTML/Tailwind, JS.
+        - Report Handling: Mock file upload for Labs, view link for Customers. Interaction: Buttons trigger modals. Method: HTML/Tailwind, JS.
+        - Mock Data: Populates UI. Method: JS objects.
         - CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
     <link rel="stylesheet" href="styles.css">
 </head>
@@ -17,14 +17,14 @@
 
     <div id="roleSelectionScreen" class="text-center card max-w-md mx-auto">
         <h1 class="text-3xl font-bold mb-2 text-slate-800">Lab Services Marketplace</h1>
-        <p class="text-slate-600 mb-8">Interactive Mockup: Select a Role to Begin</p>
+        <p class="text-slate-600 mb-8">Interactive Mockup (v3 with Reports): Select a Role<br>
+            <a target="_blank" href="infographic.html">Interactive Guide to the Frontend Design</a></p>
         <div class="space-y-3">
             <button class="button-primary w-full text-lg" onclick="selectRole('customer')">👤 Customer / Client</button>
             <button class="button-primary w-full text-lg" onclick="selectRole('laboratory')">🔬 Laboratory</button>
             <button class="button-logistics w-full text-lg" onclick="selectRole('logistics')">🚚 Logistics</button>
             <button class="button-primary w-full text-lg" onclick="selectRole('administrator')">⚙️ Administrator</button>
         </div>
-        <p class="mt-8 text-xs text-slate-500">This is a simplified mockup to demonstrate core user workflows. No data is actually saved or processed.</p>
     </div>
 
     <div id="appContainer" class="app-container w-full h-screen max-h-screen overflow-hidden">
@@ -33,11 +33,10 @@
                 <h2 class="text-xl font-semibold text-slate-700" id="sidebarRoleTitle">Role</h2>
                 <button class="text-xs text-blue-600 hover:underline" onclick="showRoleSelection()">Switch Role</button>
             </div>
-            </aside>
+        </aside>
 
         <main class="flex-1 p-6 overflow-y-auto bg-slate-50">
-            <div id="mainContent">
-                </div>
+            <div id="mainContent"></div>
         </main>
     </div>
 
@@ -51,7 +50,6 @@
             </div>
         </div>
     </div>
-
-<script src="script.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
