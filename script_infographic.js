@@ -1,151 +1,111 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const navButtons = document.querySelectorAll('.nav-button');
-    const contentSections = document.querySelectorAll('.content-section');
-    const flowSteps = document.querySelectorAll('.flow-step');
-    const flowArrows = document.querySelectorAll('.flow-arrow');
-    const flowInfo = document.getElementById('flow-info');
+        document.addEventListener('DOMContentLoaded', () => {
+            const navButtons = document.querySelectorAll('.nav-button');
+            const contentSections = document.querySelectorAll('.content-section');
+            const flowSteps = document.querySelectorAll('.flow-step');
+            const flowArrows = document.querySelectorAll('.flow-arrow'); // Should be 6 arrows for 7 steps
+            const flowInfo = document.getElementById('flow-info');
 
-    const flowDetails = {
-        '1': '<strong>1. Discovery:</strong> Customer searches/browses services. Pages: Homepage, Service Listings. Components: `SearchBar`, `ServiceCard`.',
-        '2': '<strong>2. Quote Request:</strong> Customer requests quote from Lab. Pages: Service Detail. Lab uses Dashboard. Components: `QuoteForm`, `Modal`.',
-        '3': '<strong>3. Order & Payment:</strong> Customer accepts quote, makes payment. Pages: Customer Dashboard (Quotes, Orders). Logistics task created.',
-        '4': '<strong>4. Sample Pickup (Logistics):</strong> Logistics team receives pickup task for the order. They schedule and confirm sample collection from the customer. Pages: Logistics Dashboard. Components: `PickupTaskCard`, `StatusUpdateForm`. Customer sees "Awaiting Pickup" then "Sample In Transit".',
-        '5': '<strong>5. Sample Delivery (Logistics):</strong> Logistics transports and confirms sample delivery to the designated Lab. Pages: Logistics Dashboard. Lab sees "Incoming Sample". Customer sees "Sample In Transit" then "Sample Delivered".',
-        '6': '<strong>6. Lab Fulfillment:</strong> Lab receives sample, performs analysis, updates order status. Pages: Lab Dashboard (Orders). Components: `OrderManagement`, `ReportUpload`. Customer tracks progress.',
-        '7': '<strong>7. Review:</strong> Customer receives results, leaves review for service/lab. Pages: Customer Dashboard (Orders). Components: `ReviewForm`.'
-    };
-
-    function updateActiveNav(targetId) {
-        navButtons.forEach(btn => {
-            btn.classList.toggle('active', btn.dataset.target === targetId);
-        });
-        contentSections.forEach(sec => {
-            sec.classList.toggle('active', sec.id === targetId);
-        });
-    }
-
-    navButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            updateActiveNav(button.dataset.target);
-        });
-    });
-
-    flowSteps.forEach(step => {
-        step.addEventListener('click', () => {
-            const flowId = step.dataset.flow;
+            const flowDetails = {
+                '1': '<strong>1. Discovery:</strong> Customer searches for or browses available laboratory services. Key pages include Homepage, Service Listing/Search Results. Components: `SearchBar`, `ServiceFilterPanel`, `ServiceCard`.',
+                '2': '<strong>2. Quote Request:</strong> Customer finds a suitable service and requests a detailed quote from the laboratory. Pages: Service Detail Page. Lab uses their Dashboard. Components: `QuoteRequestForm`, `ModalDialogs` for interaction.',
+                '3': '<strong>3. Order & Payment:</strong> Customer reviews and accepts the quote, then proceeds with payment. This confirms the order. Pages: Customer Dashboard (My Quotes, Order Confirmation). A logistics task for sample pickup is automatically generated.',
+                '4': '<strong>4. Sample Pickup (Logistics):</strong> The logistics team receives the pickup task. They schedule and confirm the sample collection from the customer. Pages: Logistics Dashboard. Components: `PickupTaskCard`, `StatusUpdateForm`, `MapView` (for route optimization - future). Customer sees "Awaiting Pickup" then "Sample In Transit".',
+                '5': '<strong>5. Sample Delivery (Logistics):</strong> Logistics personnel transport the sample and confirm its delivery to the designated laboratory. Pages: Logistics Dashboard. Lab sees "Incoming Sample" on their dashboard. Customer sees "Sample In Transit" then "Sample Delivered to Lab".',
+                '6': '<strong>6. Lab Fulfillment & Report Upload:</strong> The laboratory receives the sample, performs the analysis according to the order, updates the order status (e.g., "In Progress", "Analysis Complete"), and securely uploads the final lab report/results to the platform. Pages: Lab Dashboard (Order Management). Components: `OrderDetailsView`, `ReportUploadControl`, `StatusUpdateDropdown`.',
+                '7': '<strong>7. View Report & Review:</strong> The customer is notified that the report is available. They can view or download the lab report from their dashboard. After reviewing the results, the customer can leave a review and rating for the service and the laboratory. Pages: Customer Dashboard (My Orders, Order Detail). Components: `ReportViewer/DownloadLink`, `ReviewForm`, `RatingStars`.'
+            };
             
-            flowSteps.forEach(s => {
-                s.classList.remove('active-path');
-                s.classList.remove('logistics-path'); // Ensure old logistics path is cleared
-                // Re-apply default border if not logistics step by default
-                if (!s.classList.contains('logistics-path-default')) { // Assuming you might add a default logistics class
-                        s.style.borderColor = '#d1d5db'; // Default border
-                }
-            });
-            flowArrows.forEach(a => {
-                a.classList.remove('active-path');
-                a.classList.remove('logistics-path');
-                a.style.color = '#d1d5db'; // Default arrow color
-            });
+            const flowPathOrder = [1, 2, 3, 4, 5, 6, 7]; 
+            const logisticsSteps = [4, 5]; 
 
-            step.classList.add('active-path');
-            if (step.classList.contains('logistics-path')) { // Check if the clicked step is a logistics step
-                step.classList.remove('active-path'); // Remove general active if it's logistics
-                step.classList.add('logistics-path'); // Ensure logistics path style is applied
+            function updateActiveNav(targetId) {
+                navButtons.forEach(btn => btn.classList.toggle('active', btn.dataset.target === targetId));
+                contentSections.forEach(sec => sec.classList.toggle('active', sec.id === targetId));
             }
 
+            navButtons.forEach(button => button.addEventListener('click', () => updateActiveNav(button.dataset.target)));
 
-            const currentFlowPath = [];
-            if (flowId === '1') currentFlowPath.push(0);
-            if (flowId === '2') currentFlowPath.push(0,1);
-            if (flowId === '3') currentFlowPath.push(0,1,2);
-            if (flowId === '4') currentFlowPath.push(0,1,2,3); // Arrow to logistics
-            if (flowId === '5') currentFlowPath.push(0,1,2,3,4); // Arrow from pickup to delivery
-            if (flowId === '6') currentFlowPath.push(0,1,2,3,4,5); // Arrow from delivery to fulfillment
-            if (flowId === '7') currentFlowPath.push(0,1,2,3,4,5,6); // Arrow from fulfillment to review
-            
-            currentFlowPath.forEach(arrowIndex => {
-                flowArrows[arrowIndex].classList.add('active-path');
-                // If the arrow leads to or from a logistics step, style it as logistics
-                const fromStep = flowSteps[arrowIndex]; // Step before this arrow
-                const toStep = flowSteps[arrowIndex+1]; // Step after this arrow
-                if ((fromStep && fromStep.dataset.flow >= 4 && fromStep.dataset.flow <=5) || (toStep && toStep.dataset.flow >=4 && toStep.dataset.flow <=5) ){
-                        flowArrows[arrowIndex].classList.add('logistics-path');
-                        flowArrows[arrowIndex].classList.remove('active-path');
-                }
-            });
-                // Special styling for logistics steps themselves
-            flowSteps.forEach(s_el => {
-                if (s_el.dataset.flow === '4' || s_el.dataset.flow === '5') {
-                    if (s_el === step || currentFlowPath.includes(parseInt(s_el.dataset.flow)-1) || currentFlowPath.includes(parseInt(s_el.dataset.flow)-2) && parseInt(s_el.dataset.flow) <= parseInt(flowId) ) { // Highlight if part of active path up to current step
-                        s_el.classList.add('logistics-path');
-                        s_el.classList.remove('active-path');
-                    }
-                }
-            });
+            flowSteps.forEach(step => {
+                step.addEventListener('click', () => {
+                    const clickedFlowId = parseInt(step.dataset.flow);
+                    
+                    flowSteps.forEach(s => {
+                        s.classList.remove('active-path', 'logistics-path');
+                        s.style.borderColor = '#d1d5db'; 
+                    });
+                    flowArrows.forEach(a => {
+                        a.classList.remove('active-path', 'logistics-path');
+                        a.style.color = '#d1d5db'; 
+                    });
 
+                    let pathIndex = flowPathOrder.indexOf(clickedFlowId);
+                    if (pathIndex === -1) return;
 
-            flowInfo.innerHTML = `<p>${flowDetails[flowId]}</p>`;
-        });
-    });
-    
-    updateActiveNav('overview'); // Set initial active tab
-
-    // Initialize Chart.js
-    const ctx = document.getElementById('techStackChart').getContext('2d');
-    new Chart(ctx, {
-        type: 'doughnut',
-        data: {
-            labels: ['Core (React)', 'Styling (Tailwind)', 'State Management', 'Data Fetching', 'Routing', 'Forms & UI'],
-            datasets: [{
-                label: 'Tech Stack Distribution',
-                data: [30, 20, 15, 15, 10, 10],
-                backgroundColor: [
-                    '#4A90E2', // Blue
-                    '#50E3C2', // Teal
-                    '#F5A623', // Orange
-                    '#F8E71C', // Yellow
-                    '#BD10E0', // Purple
-                    '#7ED321'  // Green
-                ],
-                borderColor: '#f8f7f4', // Match body background
-                borderWidth: 4,
-                hoverOffset: 8
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                legend: {
-                    position: 'bottom',
-                    labels: {
-                        color: '#4a4a4a', // Match body text
-                        font: {
-                            family: 'Inter',
-                            size: 12
-                        },
-                        padding: 15
-                    }
-                },
-                tooltip: {
-                    bodyFont: { family: 'Inter' },
-                    titleFont: { family: 'Inter' },
-                    callbacks: {
-                        label: function(context) {
-                            let label = context.label || '';
-                            if (label) {
-                                label += ': ';
+                    for (let i = 0; i <= pathIndex; i++) {
+                        const currentStepId = flowPathOrder[i];
+                        const currentStepElement = document.querySelector(`.flow-step[data-flow="${currentStepId}"]`);
+                        if (currentStepElement) {
+                            if (logisticsSteps.includes(currentStepId)) {
+                                currentStepElement.classList.add('logistics-path');
+                            } else {
+                                currentStepElement.classList.add('active-path');
                             }
-                            if (context.parsed !== null) {
-                                label += context.parsed + '%';
+                        }
+
+                        if (i < pathIndex) { 
+                            // Arrow IDs are 0 to 5 for 6 transitions between 7 steps
+                            // Arrow 0: 1->2
+                            // Arrow 1: 2->3
+                            // Arrow 2: 3->4 (down)
+                            // Arrow 3: 4->5 (down, from row 2 to row 4 in the grid)
+                            // Arrow 4: 6->7 (left, this is the arrow with data-arrow-id="6" in HTML)
+                            // Arrow 5: 5->6 (left, this is the arrow with data-arrow-id="5" in HTML)
+                            
+                            let arrowToHighlight;
+                            if (i === 0) arrowToHighlight = document.querySelector(`.flow-arrow[data-arrow-id="0"]`); // 1->2
+                            else if (i === 1) arrowToHighlight = document.querySelector(`.flow-arrow[data-arrow-id="1"]`); // 2->3
+                            else if (i === 2) arrowToHighlight = document.querySelector(`.flow-arrow[data-arrow-id="2"]`); // 3->4
+                            else if (i === 3) arrowToHighlight = document.querySelector(`.flow-arrow[data-arrow-id="3"]`); // 4->5
+                            else if (i === 4) arrowToHighlight = document.querySelector(`.flow-arrow[data-arrow-id="5"]`); // 5->6 (HTML arrow 5)
+                            else if (i === 5) arrowToHighlight = document.querySelector(`.flow-arrow[data-arrow-id="6"]`); // 6->7 (HTML arrow 6)
+
+
+                            if (arrowToHighlight) {
+                                if (logisticsSteps.includes(flowPathOrder[i]) || logisticsSteps.includes(flowPathOrder[i+1])) {
+                                     arrowToHighlight.classList.add('logistics-path');
+                                } else {
+                                     arrowToHighlight.classList.add('active-path');
+                                }
                             }
-                            return label;
                         }
                     }
+                    flowInfo.innerHTML = `<p>${flowDetails[clickedFlowId.toString()] || 'Select a step.'}</p>`;
+                });
+            });
+            
+            updateActiveNav('overview'); 
+
+            const ctx = document.getElementById('techStackChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Core (React)', 'Styling (Tailwind)', 'State Management', 'Data Fetching', 'Routing', 'Forms & UI'],
+                    datasets: [{
+                        label: 'Tech Stack Distribution',
+                        data: [30, 20, 15, 15, 10, 10],
+                        backgroundColor: ['#4A90E2', '#50E3C2', '#F5A623', '#F8E71C', '#BD10E0', '#7ED321'],
+                        borderColor: '#f8f7f4', 
+                        borderWidth: 4,
+                        hoverOffset: 8
+                    }]
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'bottom', labels: { color: '#4a4a4a', font: { family: 'Inter', size: 12 }, padding: 15 }},
+                        tooltip: { bodyFont: { family: 'Inter' }, titleFont: { family: 'Inter' }, callbacks: { label: function(c) { return `${c.label}: ${c.parsed}%`; }}}
+                    },
+                    cutout: '60%'
                 }
-            },
-            cutout: '60%'
-        }
-    });
-});
+            });
+        });

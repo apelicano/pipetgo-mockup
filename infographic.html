@@ -7,11 +7,13 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Warm Neutrals with Subtle Blue/Green Accents & Orange for Logistics -->
+    <!-- Application Structure Plan: The SPA is structured into four main, navigable sections: 'Overview', 'User Journeys', 'Architecture', and 'Technology Stack'. The 'User Journeys' section uses an interactive flowchart to visualize the complex interactions, now including logistics and report handling. This design prioritizes user-driven exploration and comprehension of the system's design. -->
     <!-- Visualization & Content Choices: 
-        - Report Info: Core Objectives & User Roles -> Goal: Inform -> Viz: Key stat cards and role descriptions (updated for Logistics). Interaction: None, static info. Justification: Provides a quick, high-level summary upfront. Method: HTML/Tailwind.
-        - Report Info: Key User Flows & Pages -> Goal: Organize/Change -> Viz: Interactive Process Flow Diagram (updated for Logistics). Interaction: Clicking on a stage highlights the path and displays detailed information. Justification: Visualizing the flow makes the complex marketplace interactions (search, quote, order, logistics, fulfillment, review) much easier to follow than a long list of pages. Method: HTML/Tailwind/JS.
-        - Report Info: Component-Based Architecture -> Goal: Organize -> Viz: Card-based layout for Atoms, Molecules, Organisms. Interaction: Hovering over cards for emphasis. Justification: Represents the hierarchical nature of component design visually. Method: HTML/Tailwind/JS.
-        - Report Info: Technology Stack -> Goal: Compare/Inform -> Viz: Dynamic Doughnut Chart. Interaction: Hovering over chart segments reveals details in a tooltip. Justification: Provides a clear, quantitative breakdown of the recommended technologies. Method: Chart.js.
+        - Report Info: Core Objectives & User Roles -> Goal: Inform -> Viz: Key stat cards and role descriptions (updated for Logistics & Reports). Interaction: None, static info. Justification: Provides a quick, high-level summary upfront. Method: HTML/Tailwind.
+        - Report Info: Key User Flows & Pages -> Goal: Organize/Change -> Viz: Interactive Process Flow Diagram (updated for Logistics & Reports, click functionality fixed). Interaction: Clicking on a stage highlights the path and displays detailed information. Justification: Visualizing the flow makes the complex marketplace interactions much easier to follow. Method: HTML/Tailwind/JS.
+        - Report Info: Component-Based Architecture -> Goal: Organize -> Viz: Card-based layout for Atoms, Molecules, Organisms (mentioning ReportUpload/Viewer). Method: HTML/Tailwind/JS.
+        - Report Info: Technology Stack -> Goal: Compare/Inform -> Viz: Dynamic Doughnut Chart. Method: Chart.js.
         - CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
     <link rel="stylesheet" href="styles_infographic.css">
 </head>
@@ -21,7 +23,7 @@
 
         <header class="text-center mb-8 md:mb-12">
             <h1 class="text-4xl md:text-5xl font-bold text-gray-800 mb-2">Lab Services Marketplace</h1>
-            <p class="text-lg text-gray-600">An Interactive Guide to the Frontend Design (v2 with Logistics)</p>
+            <p class="text-lg text-gray-600">An Interactive Guide to the Frontend Design (v3.1 with Reports)</p>
         </header>
 
         <nav class="flex flex-wrap justify-center gap-2 md:gap-4 mb-8 md:mb-12 sticky top-4 bg-f8f7f4/80 backdrop-blur-sm z-10 p-2 rounded-xl shadow">
@@ -35,64 +37,65 @@
             <section id="overview" class="content-section">
                 <div class="text-center mb-10">
                     <h2 class="text-3xl font-bold text-gray-800">Core Objectives & Roles</h2>
-                    <p class="mt-2 text-gray-600 max-w-3xl mx-auto">This platform connects clients with labs, now including integrated logistics for sample handling. The architecture supports the distinct goals of each user group.</p>
+                    <p class="mt-2 text-gray-600 max-w-3xl mx-auto">This platform connects clients with labs, featuring integrated logistics for sample handling and a secure system for lab report delivery and viewing. The architecture supports the distinct goals of each user group, ensuring a seamless end-to-end service experience.</p>
                 </div>
                 <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
                     <div class="role-card">
                         <div class="text-4xl mb-3">👤</div>
                         <h3 class="text-xl font-semibold text-gray-800 mb-2">Customers/Clients</h3>
-                        <p class="text-gray-600 text-sm">Seek services, compare labs, order, track progress, and manage sample pickups.</p>
+                        <p class="text-gray-600 text-sm">Seek services, compare labs, order, track progress, manage sample pickups, and securely view/download their lab reports.</p>
                     </div>
                     <div class="role-card">
                         <div class="text-4xl mb-3">🔬</div>
                         <h3 class="text-xl font-semibold text-gray-800 mb-2">Laboratories</h3>
-                        <p class="text-gray-600 text-sm">List services, manage profiles, handle quotes, fulfill orders, and track incoming sample deliveries.</p>
+                        <p class="text-gray-600 text-sm">List services, manage profiles, handle quotes, fulfill orders, securely upload lab reports for clients, and track incoming samples.</p>
                     </div>
                     <div class="role-card">
                         <div class="text-4xl mb-3">🚚</div>
                         <h3 class="text-xl font-semibold text-gray-800 mb-2">Logistics</h3>
-                        <p class="text-gray-600 text-sm">Manage sample pickup from clients and delivery to labs, providing tracking updates.</p>
+                        <p class="text-gray-600 text-sm">Manage sample pickup from clients and delivery to labs, providing tracking updates for physical samples.</p>
                     </div>
                     <div class="role-card">
                         <div class="text-4xl mb-3">⚙️</div>
                         <h3 class="text-xl font-semibold text-gray-800 mb-2">Administrators</h3>
-                        <p class="text-gray-600 text-sm">Oversee platform operations, manage users, transactions, disputes, and logistics coordination.</p>
+                        <p class="text-gray-600 text-sm">Oversee platform operations, manage users, transactions, disputes, logistics coordination, and ensure platform integrity.</p>
                     </div>
                 </div>
             </section>
 
             <section id="journeys" class="content-section">
                 <div class="text-center mb-10">
-                    <h2 class="text-3xl font-bold text-gray-800">Interactive User Journeys (with Logistics)</h2>
-                    <p class="mt-2 text-gray-600 max-w-3xl mx-auto">This diagram illustrates the core interactions, including sample logistics. Click any step to highlight the path and see details.</p>
+                    <h2 class="text-3xl font-bold text-gray-800">Interactive User Journeys (with Reports)</h2>
+                    <p class="mt-2 text-gray-600 max-w-3xl mx-auto">This diagram illustrates the core interactions, including sample logistics and report handling. Click any step to highlight the path and see details.</p>
                 </div>
 
                 <div class="bg-white p-6 rounded-lg shadow-lg">
                     <div id="flow-info" class="mb-6 p-4 bg-blue-50 border border-blue-200 rounded-lg text-gray-700 min-h-[100px] flex items-center justify-center">
                         <p>Click a step to begin.</p>
                     </div>
-                    <div class="grid grid-cols-1 md:grid-cols-7 items-center justify-items-center gap-y-4 text-center text-xs sm:text-sm font-medium">
-                        <div class="flow-step p-2 sm:p-3 rounded-lg w-full" data-flow="1">1. Discovery</div>
-                        <div class="flow-arrow text-2xl sm:text-3xl">→</div>
-                        <div class="flow-step p-2 sm:p-3 rounded-lg w-full" data-flow="2">2. Quote Request</div>
-                        <div class="flow-arrow text-2xl sm:text-3xl">→</div>
-                        <div class="flow-step p-2 sm:p-3 rounded-lg w-full" data-flow="3">3. Order & Payment</div>
-                        <div class="flow-arrow text-2xl sm:text-3xl transform md:rotate-90 md:translate-y-4">↓</div>
+                    <div class="grid grid-cols-1 md:grid-cols-4 items-stretch justify-items-center gap-y-4 text-center text-xs sm:text-sm font-medium">
+                        <!-- Row 1 -->
+                        <div class="flow-step p-2 sm:p-3 rounded-lg w-full h-full flex items-center justify-center" data-flow="1">1. Discovery</div>
+                        <div class="flow-arrow text-2xl sm:text-3xl flex items-center justify-center" data-arrow-id="0">→</div>
+                        <div class="flow-step p-2 sm:p-3 rounded-lg w-full h-full flex items-center justify-center" data-flow="2">2. Quote Request</div>
+                        <div class="flow-arrow text-2xl sm:text-3xl flex items-center justify-center" data-arrow-id="1">→</div>
+                        <!-- Row 2 -->
+                        <div class="flow-step p-2 sm:p-3 rounded-lg w-full h-full flex items-center justify-center" data-flow="3">3. Order & Payment</div>
+                        <div class="flow-arrow text-2xl sm:text-3xl flex items-center justify-center transform md:rotate-90" data-arrow-id="2">↓</div>
+                        <div class="flow-step logistics-path p-2 sm:p-3 rounded-lg w-full h-full flex items-center justify-center" data-flow="4">4. Sample Pickup (Logistics)</div>
+                        <div class="flow-arrow logistics-path text-2xl sm:text-3xl flex items-center justify-center transform md:rotate-90" data-arrow-id="3">↓</div>
+                         <!-- Row 3 -->
+                        <div class="flow-step p-2 sm:p-3 rounded-lg w-full h-full flex items-center justify-center" data-flow="7">7. View Report & Review</div>
+                        <div class="flow-arrow text-2xl sm:text-3xl flex items-center justify-center transform md:rotate-180" data-arrow-id="6">←</div>
+                        <div class="flow-step p-2 sm:p-3 rounded-lg w-full h-full flex items-center justify-center" data-flow="6">6. Lab Fulfillment & Report Upload</div>
+                        <div class="flow-arrow logistics-path text-2xl sm:text-3xl flex items-center justify-center transform md:rotate-180" data-arrow-id="5">←</div>
+                         <!-- Row 4 (connects step 4 to 5) -->
                         <div class="hidden md:block"></div>
-                        
                         <div class="hidden md:block"></div>
-                        <div class="hidden md:block"></div>
-                        <div class="hidden md:block"></div>
-                        <div class="flow-step logistics-path p-2 sm:p-3 rounded-lg w-full" data-flow="4">4. Sample Pickup (Logistics)</div>
-                        <div class="flow-arrow logistics-path text-2xl sm:text-3xl transform md:-rotate-90 md:-translate-y-4">↑</div>
-                        <div class="hidden md:block"></div>
+                        <div class="flow-step logistics-path p-2 sm:p-3 rounded-lg w-full h-full flex items-center justify-center" data-flow="5">5. Sample Delivery (Logistics)</div>
                         <div class="hidden md:block"></div>
 
-                        <div class="flow-step logistics-path p-2 sm:p-3 rounded-lg w-full" data-flow="5">5. Sample Delivery (Logistics)</div>
-                        <div class="flow-arrow logistics-path text-2xl sm:text-3xl">→</div>
-                        <div class="flow-step p-2 sm:p-3 rounded-lg w-full" data-flow="6">6. Lab Fulfillment</div>
-                        <div class="flow-arrow text-2xl sm:text-3xl">→</div>
-                        <div class="flow-step p-2 sm:p-3 rounded-lg w-full" data-flow="7">7. Review</div>
+
                     </div>
                 </div>
             </section>
@@ -100,32 +103,32 @@
             <section id="architecture" class="content-section">
                 <div class="text-center mb-10">
                     <h2 class="text-3xl font-bold text-gray-800">Component-Based Architecture</h2>
-                    <p class="mt-2 text-gray-600 max-w-3xl mx-auto">The application is built using a modular, component-based structure. This approach ensures reusability, consistency, and maintainability across all user roles, including logistics management.</p>
+                    <p class="mt-2 text-gray-600 max-w-3xl mx-auto">The application is built using a modular, component-based structure. This includes components for report uploading by labs and report viewing by customers.</p>
                 </div>
                 <div class="space-y-8">
                     <div>
                         <h3 class="text-2xl font-semibold mb-4 text-gray-700">Atoms: The Building Blocks</h3>
                         <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
                             <div class="role-card text-sm">Button</div>
-                            <div class="role-card text-sm">Input</div>
+                            <div class="role-card text-sm">Input (incl. File Input)</div>
                             <div class="role-card text-sm">Label</div>
-                            <div class="role-card text-sm">Icon (e.g., Unicode)</div>
+                            <div class="role-card text-sm">Icon (e.g., Unicode for download/view)</div>
                         </div>
                     </div>
                     <div>
                         <h3 class="text-2xl font-semibold mb-4 text-gray-700">Molecules: Simple Components</h3>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                             <div class="role-card text-sm">Search Bar (Input + Button)</div>
-                             <div class="role-card text-sm">Service Card (Info + Actions)</div>
-                             <div class="role-card text-sm">Logistics Task Card (Order Info + Status Update)</div>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                             <div class="role-card text-sm">Search Bar</div>
+                             <div class="role-card text-sm">Service Card</div>
+                             <div class="role-card text-sm">Report Upload Control</div>
                         </div>
                     </div>
                      <div>
                         <h3 class="text-2xl font-semibold mb-4 text-gray-700">Organisms: Complex Sections</h3>
-                        <div class="grid grid-cols-1 gap-4">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div class="role-card text-sm">Header (Logo + Nav + Profile)</div>
-                            <div class="role-card text-sm">Order Tracking View (Details + Logistics Status + Lab Status)</div>
-                            <div class="role-card text-sm">Logistics Dashboard (Pickup List + Map View Placeholder)</div>
+                            <div class="role-card text-sm">Order Details View (incl. Report Download/View Link)</div>
+                            <div class="role-card text-sm">Lab Order Management (incl. Report Upload Interface)</div>
                         </div>
                     </div>
                 </div>
@@ -134,7 +137,7 @@
             <section id="stack" class="content-section">
                 <div class="text-center mb-10">
                     <h2 class="text-3xl font-bold text-gray-800">Recommended Technology Stack</h2>
-                    <p class="mt-2 text-gray-600 max-w-3xl mx-auto">The frontend relies on a modern, robust set of libraries and frameworks. The core stack remains consistent, with specific UI components developed for each user role's needs.</p>
+                    <p class="mt-2 text-gray-600 max-w-3xl mx-auto">The frontend relies on a modern, robust set of libraries and frameworks. Secure file handling mechanisms will be crucial for report management.</p>
                 </div>
                 <div class="bg-white p-6 rounded-lg shadow-lg">
                    <div class="chart-container">
@@ -144,6 +147,8 @@
             </section>
         </main>
     </div>
+
     <script src="script_infographic.js"></script>
+
 </body>
 </html>

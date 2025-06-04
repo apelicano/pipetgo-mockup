@@ -9,17 +9,6 @@ A single-page JavaScript mockup for a laboratory service marketplace platform. T
 - **Dynamic UI:** Sidebar navigation, modal dialogs, status badges, and forms.
 - **No Backend:** All data and logic are in `script.js` for demonstration purposes.
 
-## Usage
-
-1. Clone the repo.
-2. Open `index.html` in your browser (ensure it loads `script.js`).
-3. Select a role and explore the mock dashboards.
-
-## Structure
-
-- `script.js`: Main logic and UI rendering.
-- `index.html`: Minimal HTML shell (not included here).
-- `styles.css`: WIP
 
 ## Database Schema  
 
@@ -191,13 +180,13 @@ CREATE TABLE Reviews (
 
 ---
 
-### Next Steps
+### Notes: Next Steps
 
 - **MVP vs. Feature-Rich:**  
-  For an MVP, you might choose to keep some fields simpler (for example, storing keys as strings or JSON blobs) but planning a relational schema now offers the flexibility to expand (such as normalizing certifications or specialties later).
+  For an MVP, keep some fields simpler (for example, storing keys as strings or JSON blobs) but planning a relational schema now offers flexibility to expand (such as normalizing certifications or specialties later).
 
 - **Indexes & Performance:**  
-  As your platform scales, consider adding indexes on foreign keys and columns that are frequently filtered (e.g., status fields).
+  As platform scales, add indexes on foreign keys and columns that are frequently filtered (e.g., status fields).
 
 - **Data Integrity:**  
   Use appropriate constraints (such as CHECK constraints on ratings or statuses) and foreign key relationships to maintain data integrity.

@@ -1,73 +1,73 @@
-body {
-    font-family: 'Inter', sans-serif;
-    background-color: #f8f7f4; /* Warm neutral */
-    color: #4a4a4a;
-}
-.nav-button {
-    transition: all 0.3s ease;
-}
-.nav-button.active {
-    background-color: #4A90E2; /* Blue accent */
-    color: white;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
-.nav-button:not(.active):hover {
-    background-color: #e0e7ff; /* Lighter blue for hover */
-}
-.content-section {
-    display: none;
-}
-.content-section.active {
-    display: block;
-    animation: fadeIn 0.5s ease-in-out;
-}
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-.flow-step {
-    transition: all 0.3s ease;
-    cursor: pointer;
-    border: 2px solid #d1d5db; /* Gray-300 */
-    background-color: #f9fafb; /* Gray-50 */
-}
-.flow-step:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-}
-.flow-step.active-path {
-    background-color: #4A90E2; /* Blue accent */
-    color: white;
-    border-color: #357ABD; /* Darker blue */
-}
-.flow-step.logistics-path { /* Specific for logistics steps */
-    background-color: #f97316; /* Orange-500 */
-    color: white;
-    border-color: #ea580c; /* Orange-600 */
-}
-.flow-arrow {
-    transition: color 0.3s ease;
-    color: #d1d5db; /* Gray-300 */
-}
-.flow-arrow.active-path {
-    color: #4A90E2; /* Blue accent */
-}
-.flow-arrow.logistics-path {
-    color: #f97316; /* Orange-500 */
-}
-.chart-container {
-    position: relative;
-    width: 100%;
-    max-width: 450px;
-    margin-left: auto;
-    margin-right: auto;
-    height: auto; /* Adjusted for responsiveness */
-    max-height: 450px;
-}
-.role-card {
-    background-color: white;
-    padding: 1.5rem;
-    border-radius: 0.5rem;
-    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
-    text-align: center;
-}
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f7f4; /* Warm neutral */
+            color: #4a4a4a;
+        }
+        .nav-button {
+            transition: all 0.3s ease;
+        }
+        .nav-button.active {
+            background-color: #4A90E2; /* Blue accent */
+            color: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .nav-button:not(.active):hover {
+            background-color: #e0e7ff; /* Lighter blue for hover */
+        }
+        .content-section {
+            display: none;
+        }
+        .content-section.active {
+            display: block;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .flow-step {
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 2px solid #d1d5db; /* Gray-300 */
+            background-color: #f9fafb; /* Gray-50 */
+        }
+        .flow-step:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        .flow-step.active-path {
+            background-color: #4A90E2; /* Blue accent */
+            color: white;
+            border-color: #357ABD; /* Darker blue */
+        }
+        .flow-step.logistics-path { 
+            background-color: #f97316; /* Orange-500 */
+            color: white;
+            border-color: #ea580c; /* Orange-600 */
+        }
+        .flow-arrow {
+            transition: color 0.3s ease;
+            color: #d1d5db; /* Gray-300 */
+        }
+        .flow-arrow.active-path {
+            color: #4A90E2; /* Blue accent */
+        }
+        .flow-arrow.logistics-path {
+            color: #f97316; /* Orange-500 */
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 450px;
+            margin-left: auto;
+            margin-right: auto;
+            height: auto; 
+            max-height: 450px;
+        }
+        .role-card {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
+            text-align: center;
+        }
